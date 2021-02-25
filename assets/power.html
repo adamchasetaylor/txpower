@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <title>Power Plans</title>
+  </head>
+  <body>
+    <main class="main" id="top">
+      <div class="container-fluid" data-layout="container">
+        <div class="content">
+          <h1>Top Power Plans - Richardson, TX</h1>
+
+          <table border="1" cellpadding="10" id="powerco" aria-label="Power Companys" width="100%">
+            <tr>
+              <th id="company">Company</th>
+              <th id="plan">Plan</th>
+              <th id="price">Price</th>
+              <th id="contract">Contract</th>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="https://www.gexaenergy.com/fplcommon/images/logo.png"
+                  style="max-height: 80px; max-width: 160px"
+                />
+              </td>
+              <td>Current Plan: <br /><b>Gexa Choice Secure 3</b></td>
+              <td>5.8</td>
+              <td>3 (Ends 5/25/2021)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+
+  <script type="text/javascript">
+    fetch('/power')
+      .then((response) => response.json())
+      .then((response) => {
+        for (data of response) {
+          console.log(data);
+
+          const table = document.getElementById('powerco').insertRow(-1);
+          const company_name = table.insertCell(-1);
+          const powerplan = table.insertCell(-1);
+          const price = table.insertCell(-1);
+          const contract = table.insertCell(-1);
+
+          company_name.innerHTML = `<img src="${data.company_logo}" style="max-height: 80px; max-width: 160px;"/>`;
+          powerplan.innerHTML = `<a href="${data.go_to_plan}">${data.plan_name}</a>`;
+          price.innerHTML = data.price;
+          contract.innerHTML = data.term_value;
+        }
+      });
+  </script>
+</html>
